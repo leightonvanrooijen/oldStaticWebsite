@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+</head>
+<!-- Nav bar -->
+
+<body>
+    <header>
+        <a href="http://www.leightonv.co.nz/" class="logo"><img class="logo" src="imgs/LogoLeighotn.png"></a>
+        <a href="http://www.leightonv.co.nz/" class="mobile-logo"><img class="mobile-logo"
+                src="imgs/LogoLVRletters.png"></a>
+        <nav>
+            <ul class="nav-link">
+                <li><a href="/project-displaypage.html">About</li>
+                <li><a href="http://www.leightonv.co.nz/">Projects</li>
+            </ul>
+        </nav>
+
+        <a onclick="openContact()" class="cta" href="#"><button>Contact</button></a>
+        <a onclick="openNav()" class="main-menu" href="#"><button>Menu</button></a>
+
+        <div id="mobile-menu" class="overlay">
+            <a class="close" onclick="closeNav()">&times;</a>
+            <div class="overlay-content">
+                <a href="/project-displaypage.html">About</a>
+                <a href="http://www.leightonv.co.nz/">Projects</a>
+                <a onclick="openContact()" class="cta" href="#">Contact</a>
+            </div>
+            <script type="text/javascript" src="mobile.js"></script>
+        </div>
+
+        <div id="contact-menu" class="overlay">
+            <a class="close" onclick="closeContact()">&times;</a>
+            <div class="overlay-content">
+                <a href="https://www.linkedin.com/in/leightonvanrooijen/" target="_blank">LinkedIn</a>
+                <a href="https://github.com/leightonvanrooijen" target="_blank">GitHub</a>
+                <a href="mailto:leightonvanrooijen@gmail.com">Email</a>
+            </div>
+            <script type="text/javascript" src="contact.js"></script>
+        </div>
+
+
+    </header>
+    <!-- Body -->
+
+    <div class="container">
+        <article class="post">
+            <h1>ARM Templates: Structuring the Template</h1>
+            <h2>Leighton van Rooijen 17/09/2020</h2>
+            
+            <p>
+                Now that we have a basic idea about how ARM templates work and how to deploy them let's dive into the structure of templates. A template has eight possible sections that you can use to create a deployment. In its most basic form it looks like this:
+                </p>
+                <pre class="codebox">
+                    <code>
+{
+   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "",
+    "apiProfile": "",
+    "parameters": {  },
+    "variables": {  },
+    "functions": [  ],
+    "resources": [  ],
+    "outputs": {  }
+}
+                    </code>
+                </pre>
+                <p>
+                Some of these will look familiar from the last post but just in case you didn’t see it we will go over everything.
+                </p>
+                <p>
+                <strong>$schema </strong>(Required)<strong> </strong>- This points to the location of the JSON schema file. There are multiple different schemas that are used for different deployment purposes. We will focus on the four most useful ones:
+                </p>
+                <ul>
+                
+                <li>Resource Group deployments: 
+                <ul>
+                 
+                    <li>https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#
+                </li> 
+                </ul>
+                
+                <li>Subscription deployment: 
+                <ul>
+                 
+                <li>https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#
+                </li> 
+                </ul>
+                
+                <li>Management Group deployments: 
+                <ul>
+                 
+                <li>https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#
+                </li> 
+                </ul>
+                
+                <li>Tenant deployments: 
+                <ul>
+                 
+                <li>https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#
+                </li> 
+                </ul>
+                </li> 
+                </ul>
+                <p>
+                <strong>contentVersion </strong>(Required) - This is the version of the template. It’s not so important for us. But when significant changes are made to the template you increase this number. If multiple people are making deployments or updates the template with the highest number will be used. Alternatively, if a template is deployed with a higher version number only templates with higher numbers can be used to update it. This prevents accidental update rollbacks.
+                </p>
+                <p>
+                <strong>apiProfile </strong>(Not Required) - This is used to avoid specifying a specific API version for each resource type. It’s a super useful tool so I’d recommend really studying up on this. It allows your template to automatically select a version that is compatible in the environment that it will be deployed in.
+                </p>
+                <p>
+                For example Azure Stack Hub doesn’t use the latest version of the API in global Azure due to updating and compatibility bottlenecks. It would be a pain to have to research what each API version to use for every single resource. Instead you can just specify a API profile and let it automatically handle the versions.
+                </p>
+                <p>
+                <strong>parameters </strong>(Not Required)<strong> </strong>- This specifies the values that you can input when deploying the resources. There's a limit of 256 but you can just make objects to get around that. For example you could use a parameter to specify which storage types you are allowed to use within the template.
+                </p>
+                <p>
+                <strong>variables </strong>(Not Required)<strong> </strong>- These are not needed but they are used to simplify templates. Typically these are used to prevent you repeating complicated expressions within the template. Instead of retyping the complicated expression you reference the variable instead. If you want to use a standardised naming convention you could use a naming variable. Instead of entering a name you just enter the variable  in its place and it takes care of creating a unique name abiding by the convention. 
+                </p>
+                <p>
+                <strong>functions </strong>(Not Required)<strong> </strong>- These are really useful for automating and performing tasks on your templates. A distinction to be made is between user defined functions and built in functions. Built in functions have already been defined within the library and user defined are one’s that you make to serve a specific purpose. Going back to the previous example of using a standardised naming convention you would use a function to produce the unique name for the variable. 
+                </p>
+                <p>
+                <strong>resources </strong>(Required) <strong> </strong>- This contains the resources you want to deploy or update. There are a lot of resources so we will cover them in a seperate post.
+                </p>
+                <p>
+                <strong>outputs </strong>(Not Required) - This is used to return certain values when the resource is deployed. This is commonly used to display IP addresses, names and what  not for each deployment so you can keep track and identify them. Conditional outputs are useful for telling you when a condition is met and something has happened as a result of said condition. For example you may have a condition set to deploy a storage account every time a resource group with a specific naming convention is deployed. You would want to be notified of that storage account being created by using a conditional output.
+                </p>
+                <p>
+                That wraps up the entire format of a ARM template. Remember that templates don’t have to contain all of the sections. Also each one of these sections have a large amount of options so be sure to study up on them. I’ll cover each one in depth in a future post.
+                </p>
+
+        </article>
+    </div>
+
+</body>

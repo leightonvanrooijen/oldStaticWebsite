@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+</head>
+<!-- Nav bar -->
+
+<body>
+    <header>
+        <a href="http://www.leightonv.co.nz/" class="logo"><img class="logo" src="imgs/LogoLeighotn.png"></a>
+        <a href="http://www.leightonv.co.nz/" class="mobile-logo"><img class="mobile-logo"
+                src="imgs/LogoLVRletters.png"></a>
+        <nav>
+            <ul class="nav-link">
+                <li><a href="/project-displaypage.html">About</li>
+                <li><a href="http://www.leightonv.co.nz/">Projects</li>
+            </ul>
+        </nav>
+
+        <a onclick="openContact()" class="cta" href="#"><button>Contact</button></a>
+        <a onclick="openNav()" class="main-menu" href="#"><button>Menu</button></a>
+
+        <div id="mobile-menu" class="overlay">
+            <a class="close" onclick="closeNav()">&times;</a>
+            <div class="overlay-content">
+                <a href="/project-displaypage.html">About</a>
+                <a href="http://www.leightonv.co.nz/">Projects</a>
+                <a onclick="openContact()" class="cta" href="#">Contact</a>
+            </div>
+            <script type="text/javascript" src="mobile.js"></script>
+        </div>
+
+        <div id="contact-menu" class="overlay">
+            <a class="close" onclick="closeContact()">&times;</a>
+            <div class="overlay-content">
+                <a href="https://www.linkedin.com/in/leightonvanrooijen/" target="_blank">LinkedIn</a>
+                <a href="https://github.com/leightonvanrooijen" target="_blank">GitHub</a>
+                <a href="mailto:leightonvanrooijen@gmail.com">Email</a>
+            </div>
+            <script type="text/javascript" src="contact.js"></script>
+        </div>
+
+
+    </header>
+    <!-- Body -->
+
+    <div class="container">
+        <article class="post">
+            <h1>Hosting a Static Website using Azure Storage</h1>
+            <h2>Leighton van Rooijen 30/08/2020</h2>
+
+            <p>TLDR:</p>
+            <ul class="tldr">
+                <li>Created a storage account</li>
+                <li>Hosted website using blob storage</li>
+                <li>Linked storage to Visual studio code</li>
+                <li>Added a custom domain name</li>
+            </ul>
+
+            <p>
+                I recently decided I wanted to make a website to show off some of the projects I've been working on as I
+                have been studying towards entering a career in the IT world particularly focusing on Cloud
+                infrastructure. I figured there was no better way to begin than hosting that website on the Azure cloud
+                platform, and it turns out it's surprisingly easy and inexpensive to do so.
+            </p>
+            <p>
+                As I already had a Azure free tier account for doing my AZ-900 and AZ-104 exams so I could skip that
+                step and go straight to creating a storage account. The storage account of choice was a general-purpose
+                v2 account. This was chosen as it has the cheapest prices for the Azure storage required for the
+                project. The only default settings I needed to change was the storage account location and secure
+                transfer required.
+            </p>
+            <p>
+                I went with Australia East for my location which automatically replicates the data to an Australia
+                Southeast data center for backup purposes due to having Geo redundancy turned on. There are plenty of
+                other backup options that I could explore in future projects but I felt this was the only option worth
+                having for now. I had to disable the secure transfer required so it would not force me to use HTTPs,
+                which to add a custom domain name I could only use HTTP. You can enable custom domain names using Azure
+                Content Delivery Network feature but that will be a job for another day.
+            </p>
+            <p>
+                Once I created the storage account I then had to navigate over to the static website option found in the
+                settings part of the navigation panel. I simply had to set the static website slider to enabled, then
+                enter the index and error document names. I took note of the primary endpoint which is the public URL
+                for the website. At this point I realized that, well, I don't actually have a website. I'll cover this
+                in a future post but to put a long story short, 24 hours and a significant amount of bodge later I was
+                the proud owner of a few HTML, CSS and JavaScript files.
+            </p>
+            <p>
+                Now that it was time to get the website up and running I needed to upload the website files into a Azure
+                Container. When the static website option is enabled a web container is automatically created so all I
+                need to do was find the container option in the Blob service section of the navigation menu, click on
+                the $web container and upload them into that. It was time to see the website in all its beauty so I
+                typed the endpoint URL and hit enter. It was nothing short of a disaster site, links in the wrong place,
+                images stacked on top of each other but I'm sure we all know this is the life of a developer. Once I had
+                that all tidied up it was time to move onto adding a custom domain.
+            </p>
+            <p>
+                For now I chose the easy and more importantly cheaper router for adding a custom domain name. I popped
+                over to Crazy Domains, purchased the domain name of leightonv.co.nz and set about mapping it to the Blob
+                Storage endpoint. This was surprisingly simple, all I had to do was create a canonical name (CNAME)
+                record on my domain provider, mapping leightonv.co.nz to the endpoint url. From here all I needed to do
+                was head to the custom domain setting under the blob service section of the navigation bar and type in
+                my domain name. A tip for the wise, if you have been using the endpoint url generated by Azure you will
+                have to clear your DNS host cache otherwise you'll get name not resolved errors. The fastest way to do
+                this if you're using Chrome is to type chrome://net-internals/#dns then click the clear host cache
+                button.
+            </p>
+            <p>
+                The final step was to attach my Azure account to Visual Studio Code. I decided this would be the easiest
+                way to push updates to the website as you can edit the files straight from VS code and every time you
+                save it will automatically push the files to the web container in the storage account. You can do this
+                by downloading the Azure extension in VS code, once done an Azure logo will be in the sidebar, click
+                that and sign into your Azure subscription used to create the storage account. Now you can access your
+                files inside of VS code and push updates on the go. There are all sorts of options for automatically
+                pusing web updates using powershell and what not but that's to be explored another day.
+            </p>
+            <p>
+                Now that I have a space to show off my projects on my journey into the information technology world I
+                can move onto creating bigger and better projects. The total cost for hosting the website on Azure over
+                the last three days, three whole cents, that’s not dollars, there’s no zero’s missing, it has cost me
+                three cents. The three cent charge was entirely my fault too, I messed up the files at one point and got
+                a few client errors which really hit the wallet hard.
+            </p>
+        </article>
+    </div>
+
+</body>

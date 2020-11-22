@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+</head>
+<!-- Nav bar -->
+
+<body>
+    <header>
+        <a href="http://www.leightonv.co.nz/" class="logo"><img class="logo" src="imgs/LogoLeighotn.png"></a>
+        <a href="http://www.leightonv.co.nz/" class="mobile-logo"><img class="mobile-logo"
+                src="imgs/LogoLVRletters.png"></a>
+        <nav>
+            <ul class="nav-link">
+                <li><a href="/project-displaypage.html">About</li>
+                <li><a href="http://www.leightonv.co.nz/">Projects</li>
+            </ul>
+        </nav>
+
+        <a onclick="openContact()" class="cta" href="#"><button>Contact</button></a>
+        <a onclick="openNav()" class="main-menu" href="#"><button>Menu</button></a>
+
+        <div id="mobile-menu" class="overlay">
+            <a class="close" onclick="closeNav()">&times;</a>
+            <div class="overlay-content">
+                <a href="/project-displaypage.html">About</a>
+                <a href="http://www.leightonv.co.nz/">Projects</a>
+                <a onclick="openContact()" class="cta" href="#">Contact</a>
+            </div>
+            <script type="text/javascript" src="mobile.js"></script>
+        </div>
+
+        <div id="contact-menu" class="overlay">
+            <a class="close" onclick="closeContact()">&times;</a>
+            <div class="overlay-content">
+                <a href="https://www.linkedin.com/in/leightonvanrooijen/" target="_blank">LinkedIn</a>
+                <a href="https://github.com/leightonvanrooijen" target="_blank">GitHub</a>
+                <a href="mailto:leightonvanrooijen@gmail.com">Email</a>
+            </div>
+            <script type="text/javascript" src="contact.js"></script>
+        </div>
+
+
+    </header>
+    <!-- Body -->
+
+    <div class="container">
+        <article class="post">
+            <h1>ARM Templates: Creating and Deploying an Azure Storage Account</h1>
+            <h2>Leighton van Rooijen 11/09/2020</h2>
+            <p>
+                Now that we know why you should be using ARM templates I’ve decided to show off a super simple ARM
+                template design and then deploy it using Powershell. Ideally you should be familiar with JSON before you
+                start reading this but it’s not essential.
+            </p>
+            <p>
+                To begin, open up Visual Studio Code and create a JSON file. I chose to call mine basic-armdeploy.json.
+                The final template should be similar to this with a few changes:
+            </p>
+            <pre class="codebox">
+                    <code>
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "resources": [
+        {
+        "type": "Microsoft.Storage/storageAccounts",
+        "apiVersion": "2019-04-01",
+        "name": "historagehi",
+        "location": "australia east",
+        "sku": {
+            "name": "Standard_LRS"
+        },
+        "kind": "StorageV2",
+        "properties": {
+            "supportsHttpsTrafficOnly": true
+        }
+        }
+    ]
+}
+                    </code>
+                </pre>
+            <p>
+                Copy and paste that code into VS code and then we can break down what each section means.
+            </p>
+            <p>
+                Essential section:
+            </p>
+            <ul>
+
+                <li><strong>$schema </strong>- This points to the location of the JSON schema file. The schema file that
+                    we point to has all of the deployment properties that are available within Azure.
+
+                <li><strong>contentVersion </strong>- This is the version of the template. It’s not so important for us.
+                    But when significant changes are made to the template you increase this number. If multiple people
+                    are making deployments or updates the template with the highest number will be used. Alternatively,
+                    if a template is deployed with a higher version number only templates with higher numbers can be
+                    used to update it. This prevents accidental update rollbacks.
+
+                <li><strong>resources </strong>- This contains the resources you want to deploy or update. In our case
+                    it will contain the storage account.
+                </li>
+            </ul>
+            <p>
+                Inside the resources section:
+            </p>
+            <ul>
+
+                <li><strong>type </strong>- This is the type of resource. This includes the resource provider. In our
+                    case it is Microsoft.Storage and the type of resource from that provider is storageAccounts.
+
+                <li><strong>apiVersion </strong>- This is the version number of the REST API to use for creating the
+                    resource. This means that as the API updates and changes your code won’t break.
+
+                <li><strong>name </strong>- Name of the resource. It has to be a universally unique storage name. Just
+                    pick something random as we will delete it at the end. It’s common for deployments to fail because
+                    everyone picks the same random names.
+
+                <li><strong>location </strong>- Sets the region where the resource is deployed. Pick the one that is
+                    closest to you.
+
+                <li><strong>sku </strong>- This is the storage account type it has two properties:
+                    <ul>
+
+                        <li><strong>name </strong>- Which is the type of storage, in our case Locally Redundant Storage.
+
+                        <li><strong>tier </strong>- premium or standard tier. Not required as we specified standard in
+                            the name.
+                        </li>
+                    </ul>
+
+                <li><strong>kind </strong>- This is the account kind. LRS supports storage, BlobStorage and StorageV2.
+                    We are using StorageV2.
+
+                <li><strong>properties </strong>- This is the parameters for the storage account. We have ensured only
+                    HTTPs traffic is allowed. There's quite a few of these so explore them in your free time.
+                </li>
+            </ul>
+            <p>
+                There’s a lot more to ARM Templates than the parameters I described above. Here’s a link that I would
+                recommend exploring everytime you want to work out how to go about making a particular deployment.
+                Structure and syntax of ARM templates: <a
+                    href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-syntax">https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-syntax</a>.
+            </p>
+            <p>
+                Deploying the template using Powershell.
+            </p>
+            <p>
+                This is a pretty simple process and for now we will do it manually using Powershell but in the future we
+                will explore automation of this process. To begin open up Powershell on your local machine and type sign
+                into your Azure account using:<strong> Connect-AzAccount</strong>
+            </p>
+            <p>
+                If you have a resource group you want to deploy to skip this step. Otherwise enter the following:
+            </p>
+            <pre class="codebox">
+                    <code>
+New-AzResourceGroup `
+        -Name myResourceGroup `
+    -Location "Central US"
+                    </code>
+                </pre>
+            <p>
+                To deploy the Arm template you need to know the location of the JSON template on your computer. The
+                quickest way is to go to the file in your file explorer then right click the address and click copy as
+                text then add the filename to the end of that. We will also save the path of the template file to a
+                variable. Although not necessary it’s good practice to get into as it stops you having to retype the
+                path for each deployment on large projects. Type the following into Powershell:
+            </p>
+            <pre class="codebox">
+                <code >
+$templateFile = "{provide-the-path-to-the-template-file}"
+New-AzResourceGroupDeployment `
+    -Name blanktemplate `
+    -ResourceGroupName myResourceGroup `
+    -TemplateFile $templateFile
+                </code>
+            </pre>
+            <p>
+                If you did everything correctly you should have a new storage account in the resource group you created.
+                Navigate to Azure and check it out for yourself.
+            </p>
+
+        </article>
+    </div>
+
+</body>

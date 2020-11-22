@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+</head>
+<!-- Nav bar -->
+
+<body>
+    <header>
+        <a href="http://www.leightonv.co.nz/" class="logo"><img class="logo" src="imgs/LogoLeighotn.png"></a>
+        <a href="http://www.leightonv.co.nz/" class="mobile-logo"><img class="mobile-logo"
+                src="imgs/LogoLVRletters.png"></a>
+        <nav>
+            <ul class="nav-link">
+                <li><a href="/project-displaypage.html">About</li>
+                <li><a href="http://www.leightonv.co.nz/">Projects</li>
+            </ul>
+        </nav>
+
+        <a onclick="openContact()" class="cta" href="#"><button>Contact</button></a>
+        <a onclick="openNav()" class="main-menu" href="#"><button>Menu</button></a>
+
+        <div id="mobile-menu" class="overlay">
+            <a class="close" onclick="closeNav()">&times;</a>
+            <div class="overlay-content">
+                <a href="/project-displaypage.html">About</a>
+                <a href="http://www.leightonv.co.nz/">Projects</a>
+                <a onclick="openContact()" class="cta" href="#">Contact</a>
+            </div>
+            <script type="text/javascript" src="mobile.js"></script>
+        </div>
+
+        <div id="contact-menu" class="overlay">
+            <a class="close" onclick="closeContact()">&times;</a>
+            <div class="overlay-content">
+                <a href="https://www.linkedin.com/in/leightonvanrooijen/" target="_blank">LinkedIn</a>
+                <a href="https://github.com/leightonvanrooijen" target="_blank">GitHub</a>
+                <a href="mailto:leightonvanrooijen@gmail.com">Email</a>
+            </div>
+            <script type="text/javascript" src="contact.js"></script>
+        </div>
+
+
+    </header>
+    <!-- Body -->
+
+    <div class="container">
+        <article class="post">
+            <h1>Using Task Scheduler to Automate Container Backup</h1>
+            <h2>Leighton van Rooijen 01/09/2020</h2>
+
+            </ul>
+            <p>
+                After a grand total of 12 hours I decided I was sick of clicking on the AZCopy batch file I made to backup my website container to local storage. That’s when I went looking for methods to automate that double click. It turns out Windows has a built in program called Task Scheduler. Task Scheduler runs on Windows servers too so this method would work in a small production environment but this wouldn’t be in any way efficient if you had a lot of containers to back up. In that case I would use powershell. In all honesty I think I will migrate this task to Powershell in the future as it would be excellent ‘real world’ practice and it should only take a few minutes.            </p>
+            <p>
+                To begin I put my AZCopy batch file into my system32 folder so that there would be no permission issues to run the batch file and that’s where most automation batch files are typically placed. The next step was to boot up Task Scheduler and click create task. From here it’s as simple as following the steps. The UI is pretty intuitive so I had no problems doing this for the first time.
+            </p>
+            <p>
+                Simply name and describe the task so you can identify it from the hundreds of other tasks going on. Make sure you have a naming convention for your backup as if you get a few of these it will make management much simpler. Mine was azcopy-project-”nameofproject”-batch. Once named set the trigger. Strangely you can only select one trigger here but don’t worry you can edit the triggers and add as many as you want once you’ve created the task. I decided I wanted the task to run every day, gave it permission to do this while I wasn’t logged on, and to also run every time I logged into my account. I figured that currently I only edit the website files on this computer so logging in would mean I was likely to be editing the files. Now I needed to select the action to be performed each time the trigger was activated. In my case it was to run the batch file so the action I went with was to start a program. All to select the batch file to run and create the task.            </p>
+            <p>
+                Once the task was created I right clicked on it and went to properties to add the second trigger. From here I went to the trigger pane and simply clicked new and went through a similar process from before. To test this all worked I cleared all the files from the local backup folder where AZCopy was directed to sync the files to then logged off and back on. Opened up the Task Scheduler, looked at the task log and it had run so I checked the folder and the files were back in there.
+            </p>
+        
+        </article>
+    </div>
+
+</body>

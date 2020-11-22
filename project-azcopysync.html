@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+</head>
+<!-- Nav bar -->
+
+<body>
+    <header>
+        <a href="http://www.leightonv.co.nz/" class="logo"><img class="logo" src="imgs/LogoLeighotn.png"></a>
+        <a href="http://www.leightonv.co.nz/" class="mobile-logo"><img class="mobile-logo"
+                src="imgs/LogoLVRletters.png"></a>
+        <nav>
+            <ul class="nav-link">
+                <li><a href="/project-displaypage.html">About</li>
+                <li><a href="http://www.leightonv.co.nz/">Projects</li>
+            </ul>
+        </nav>
+
+        <a onclick="openContact()" class="cta" href="#"><button>Contact</button></a>
+        <a onclick="openNav()" class="main-menu" href="#"><button>Menu</button></a>
+
+        <div id="mobile-menu" class="overlay">
+            <a class="close" onclick="closeNav()">&times;</a>
+            <div class="overlay-content">
+                <a href="/project-displaypage.html">About</a>
+                <a href="http://www.leightonv.co.nz/">Projects</a>
+                <a onclick="openContact()" class="cta" href="#">Contact</a>
+            </div>
+            <script type="text/javascript" src="mobile.js"></script>
+        </div>
+
+        <div id="contact-menu" class="overlay">
+            <a class="close" onclick="closeContact()">&times;</a>
+            <div class="overlay-content">
+                <a href="https://www.linkedin.com/in/leightonvanrooijen/" target="_blank">LinkedIn</a>
+                <a href="https://github.com/leightonvanrooijen" target="_blank">GitHub</a>
+                <a href="mailto:leightonvanrooijen@gmail.com">Email</a>
+            </div>
+            <script type="text/javascript" src="contact.js"></script>
+        </div>
+
+
+    </header>
+    <!-- Body -->
+
+    <div class="container">
+        <article class="post">
+            <h1>Syncing Data Between Azure and On-Premises Storage</h1>
+            <h2>Leighton van Rooijen 31/08/2020</h2>
+
+            <p>TLDR:</p>
+            <ul class="tldr">
+                <li>Download AZCopy</li>
+                <li>Create a command line script</li>
+                <li>Sync files from Azure to my laptop</li>
+            </ul>
+            <p>
+                After searching around and asking a few questions on Reddit about what parts of Azure should I focus on, one thing that popped up often was AZCopy. AZCopy is a command line utility that allows blobs or files to be coppied to or from storage accounts. I though a good exercise would be to set up a script that would back up my website files onto my laptops local storage.
+            </p>
+            <p>
+                To begin I had to download AZCopy and put the executable into my system32 folder. If you’re uncomfortable poking around in your system32 folder you can put the AZCopy executable into any folder and create a system path to it. This only takes a minute to do so it’s no big deal. Now that I had this set up I typed azcopy into the CMD to check it worked. 
+            </p>
+            <p>
+                To sync files using AZCopy you used the command: azcopy.exe sync “Source” “Destination” --tags Source is where the files you want to copy are located, destination is where you want these files, and tags is any modifiers you want to enable. For my purposes I wanted to sync the website files located in my web container to local storage on my laptop. 
+            </p>
+            <p>
+                To make the source path I needed to get the endpoint url for the container and add a shared access signature token onto the end of this. The url can be found in the properties section of the container that is to be synced. Copy the url to a notepad for later use. To generate a SAS token I went to the shared access signature option in the settings section of the storage account, left everything default apart from ticking the container resource allowed This allows scripts with the token to access all containers in the account. Click the generate button and then copy the token to the end on the container url.
+            </p>
+            <p>
+                The destination path is just the folder on your computer that you want the files to be synced to. The simplest way to do this is to navigate to the folder in file explorer and copy the destination. Once you have that copy it into the same notepad as the source path. I wanted the old files that are in the local folder to be deleted every time the container files where synced to do this I simply add a delete tag which is: --delete-destination=true. 
+            </p>
+            <p>
+                Now that all of the script components where in place I just had enter this script  into CMD:
+
+                Azcopy.exe sync “this is the url with shared access” “C:\AZCopyTest” --delete-destination=true.
+                
+                Then hit enter. You get a few statistics pop up on the screen and then the whole process is completed. Now just check the destination folder to see if the files were successfully synced. 
+                
+            </p>
+            <p>
+                Now that I have a working command for backing up my website files to local storage the next step is to automate them. I have heard that using Azures Automation services is a pretty straight forward way to automate all sorts of process so I think the next project will be to have a play around with a Automation account.
+            </p>
+        </article>
+    </div>
+
+</body>

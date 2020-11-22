@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+</head>
+<!-- Nav bar -->
+
+<body>
+    <header>
+        <a href="http://www.leightonv.co.nz/" class="logo"><img class="logo" src="imgs/LogoLeighotn.png"></a>
+        <a href="http://www.leightonv.co.nz/" class="mobile-logo"><img class="mobile-logo"
+                src="imgs/LogoLVRletters.png"></a>
+        <nav>
+            <ul class="nav-link">
+                <li><a href="/project-displaypage.html">About</li>
+                <li><a href="http://www.leightonv.co.nz/">Projects</li>
+            </ul>
+        </nav>
+
+        <a onclick="openContact()" class="cta" href="#"><button>Contact</button></a>
+        <a onclick="openNav()" class="main-menu" href="#"><button>Menu</button></a>
+
+        <div id="mobile-menu" class="overlay">
+            <a class="close" onclick="closeNav()">&times;</a>
+            <div class="overlay-content">
+                <a href="/project-displaypage.html">About</a>
+                <a href="http://www.leightonv.co.nz/">Projects</a>
+                <a onclick="openContact()" class="cta" href="#">Contact</a>
+            </div>
+            <script type="text/javascript" src="mobile.js"></script>
+        </div>
+
+        <div id="contact-menu" class="overlay">
+            <a class="close" onclick="closeContact()">&times;</a>
+            <div class="overlay-content">
+                <a href="https://www.linkedin.com/in/leightonvanrooijen/" target="_blank">LinkedIn</a>
+                <a href="https://github.com/leightonvanrooijen" target="_blank">GitHub</a>
+                <a href="mailto:leightonvanrooijen@gmail.com">Email</a>
+            </div>
+            <script type="text/javascript" src="contact.js"></script>
+        </div>
+
+
+    </header>
+    <!-- Body -->
+
+    <div class="container">
+        <article class="post">
+            <h1>ARM Templates: Why You Should Use Them</h1>
+            <h2>Leighton van Rooijen 02/09/2020</h2>
+
+            <p>
+                ARM templates are a fantastic way to automate the deployment process on Azure.
+                They are a part of a development practice called infrastructure as code. Think
+                about creating an app, that app is made up of code that describes every single
+                process that is done, everything from the UI to how it responds to a click is
+                written in code. The same theory can be applied to infrastructure as code, from
+                VM’s to networks, even the nitty gritties such as the configuration availability
+                sets can be described in an ARM template. These templates are made using
+                JavaScript Object Notation (JSON) files to describe the infrastructure and
+                configuration of the deployment. Declarative syntax is used, this means you just
+                write what you want to deploy, you don’t have to write the commands to create
+                it. If you’ve ever used an API while programming, it is similar to that. Someone
+                else has done all the hard work you just need to write the commands to utilize
+                the code.
+                </p>
+                <p>
+                Now why would you actually want to use ARM templates? Well let's take a look at
+                the main advantages;
+                </p>
+                <ul class="tldr">
+                <li><strong>Declarative syntax</strong>: Somebody else has already done the hard
+                work. You can deploy any resource you can think of using this, VM’s, networks
+                and even storage systems.</li>
+                <li><strong>Repeatable: </strong>Once you’ve made the template you can reuse the
+                template. You can even update that template, change the version number and
+                rollout updates.</li>
+                <li><strong>Orchestration: </strong>Resource Manager will order the deployment
+                operations for you so even if you have some things in the wrong order it will
+                re-orchestrate them in the most efficient way. If possible it will even deploy
+                in parallel, for example if one resource doesn’t rely on another to be created
+                it will create them at the same time.</li>
+                <li><strong>Modular: </strong>Often you will find that you are retyping the same
+                deployments that you used in parts of other templates. You can split off
+                components into smaller parts to reuse them inside of other templates.</li>
+                <li><strong>Integrate Scripts: </strong>You can add in Powershell or Bash
+                scripts to use with templates. This allows end to end deployment. JSON does the
+                deployment and configuration of resources while scripts cover actions such as
+                adding users, data or creating self signed certificates.</li>
+                <li><strong>Tracking: </strong>Review deployment history and get information
+                about the template. Other deployment methods don’t support this so from a
+                logging perspective this is the way to go.</li>
+                <li><strong>Blueprints: </strong>Microsoft provides templates that meet
+                different compliance standards. For example Government policy has certain data
+                storage requirements, you could use a blueprint to have all of this covered.
+                </li>
+                </ul>
+                <p>
+                The ARM template is split up into the  following sections;
+                </p>
+                <ul class="tldr">
+                <li><strong>Parameters: </strong>These are allowed or default values to be
+                reused across  different environments. For example you may want a naming
+                convention for all deployments. E.g name = ‘website’ + resourceGroup.id. You can
+                also specify what can be used e.g only blob and file storage can be created.</li>
+                <li><strong>Variables: </strong>Values that are reused within a template. This
+                can be created using parameters. Things such as locations of files can change,
+                it’s important to save these as variables if they are reused in templates as it
+                gives a single point to edit.</li>
+                <li><strong>User-defined Functions:</strong> You can create your own functions
+                for actions that will be repeated in your template. The scope of the functions
+                are limited compared to programming languages as they can’t access variables,
+                call other user-defined functions and so on. These are more for simple tasks
+                like making all letters lowercase.</li>
+                <li><strong>Resources: </strong>The resources that will get deployed or update.
+                This allows all options that you would see in the portal creation method but
+                using commands instead.</li>
+                <li><strong>Outputs: </strong>This is where you specify the values that you want
+                returned from the deployment. It’s good for logging purposes.
+                </li>
+                </ul>
+                <p>
+                Once the template is created you can now deploy it. When this is done the
+                Resource Manager converts the template into REST API operations. This converts
+                the JSON into a language the HTML systems can understand. Basically allowing
+                interoperability between computer systems and web systems. <br>
+                </p>
+                <p>
+                In my next post I will create a basic ARM template and deploy resources to
+                Azure. After that we can get into design theory of templates.
+                </p>
+        
+        </article>
+    </div>
+
+</body>

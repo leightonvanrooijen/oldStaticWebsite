@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+</head>
+<!-- Nav bar -->
+
+<body>
+    <header>
+        <a href="http://www.leightonv.co.nz/" class="logo"><img class="logo" src="imgs/LogoLeighotn.png"></a>
+        <a href="http://www.leightonv.co.nz/" class="mobile-logo"><img class="mobile-logo"
+                src="imgs/LogoLVRletters.png"></a>
+        <nav>
+            <ul class="nav-link">
+                <li><a href="/project-displaypage.html">About</li>
+                <li><a href="http://www.leightonv.co.nz/">Projects</li>
+            </ul>
+        </nav>
+
+        <a onclick="openContact()" class="cta" href="#"><button>Contact</button></a>
+        <a onclick="openNav()" class="main-menu" href="#"><button>Menu</button></a>
+
+        <div id="mobile-menu" class="overlay">
+            <a class="close" onclick="closeNav()">&times;</a>
+            <div class="overlay-content">
+                <a href="/project-displaypage.html">About</a>
+                <a href="http://www.leightonv.co.nz/">Projects</a>
+                <a onclick="openContact()" class="cta" href="#">Contact</a>
+            </div>
+            <script type="text/javascript" src="mobile.js"></script>
+        </div>
+
+        <div id="contact-menu" class="overlay">
+            <a class="close" onclick="closeContact()">&times;</a>
+            <div class="overlay-content">
+                <a href="https://www.linkedin.com/in/leightonvanrooijen/" target="_blank">LinkedIn</a>
+                <a href="https://github.com/leightonvanrooijen" target="_blank">GitHub</a>
+                <a href="mailto:leightonvanrooijen@gmail.com">Email</a>
+            </div>
+            <script type="text/javascript" src="contact.js"></script>
+        </div>
+
+
+    </header>
+    <!-- Body -->
+
+    <div class="container">
+        <article class="post">
+            <h1>AZCopy and the Batch File</h1>
+            <h2>Leighton van Rooijen 31/08/2020</h2>
+
+            </ul>
+            <p>
+                You would think it would be simple to turn the AZCopy script from the last post into a batch file. All I thought I would need to do was chuck that script into a text document and save it as a .bat file. Well it turns out there was one step that would have me running around the depths of the internet to work out. This elusive step had me almost giving up on AZCopy altogether, I explored every other option Azure had to offer but still people kept recommending AZCopy for a local backup.
+            </p>
+            <p>
+                It turns out that when you create a batch file you need to do a thing called escaping characters. Anyone who is familiar with any programming language will know certain characters are used for purposes other than the literal use. As the destination and source locations need to be in quotes for AZCopy I needed to use some escape characters. For example in batch files to have a single & character you actually need to type && as the & character is used as a joiner. You can find a full list of thesee by typing batch escape characters into google. But for now save yourself the headache and remember that these pesky little characters exist. 
+            </p>
+            <p>
+                Once I had worked that out all I had to do was find and replace all of the characters with their escape characters and the file was up and running. Now that I’ve got that sorted I can move onto scheduling this to be run once or twice a day to back up the container to my laptop. I plan to use Windows Task Scheduler to automate this process and maybe even have it upload it straight to my Github. 
+            </p>
+        </article>
+    </div>
+
+</body>

@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+</head>
+<!-- Nav bar -->
+
+<body>
+    <header>
+        <a href="http://www.leightonv.co.nz/" class="logo"><img class="logo" src="imgs/LogoLeighotn.png"></a>
+        <a href="http://www.leightonv.co.nz/" class="mobile-logo"><img class="mobile-logo"
+                src="imgs/LogoLVRletters.png"></a>
+        <nav>
+            <ul class="nav-link">
+                <li><a href="/project-displaypage.html">About</li>
+                <li><a href="http://www.leightonv.co.nz/">Projects</li>
+            </ul>
+        </nav>
+
+        <a onclick="openContact()" class="cta" href="#"><button>Contact</button></a>
+        <a onclick="openNav()" class="main-menu" href="#"><button>Menu</button></a>
+
+        <div id="mobile-menu" class="overlay">
+            <a class="close" onclick="closeNav()">&times;</a>
+            <div class="overlay-content">
+                <a href="/project-displaypage.html">About</a>
+                <a href="http://www.leightonv.co.nz/">Projects</a>
+                <a onclick="openContact()" class="cta" href="#">Contact</a>
+            </div>
+            <script type="text/javascript" src="mobile.js"></script>
+        </div>
+
+        <div id="contact-menu" class="overlay">
+            <a class="close" onclick="closeContact()">&times;</a>
+            <div class="overlay-content">
+                <a href="https://www.linkedin.com/in/leightonvanrooijen/" target="_blank">LinkedIn</a>
+                <a href="https://github.com/leightonvanrooijen" target="_blank">GitHub</a>
+                <a href="mailto:leightonvanrooijen@gmail.com">Email</a>
+            </div>
+            <script type="text/javascript" src="contact.js"></script>
+        </div>
+
+
+    </header>
+    <!-- Body -->
+
+    <div class="content">
+        <div class="wrapper">
+            <article class="project">
+                <h1>ARM Templates: Structure</h1>
+                <p>Going over the basic structure for ARM templates</p>
+                <img src="imgs/armtemplatestructure.jpg">
+                <a href="/blog-armtemplates-format.html"><button>See Project</button></a>
+            </article>
+            <article class="project">
+                <h1>ARM: Storage Account</h1>
+                <p>Creating and explaining how to deploy a storage account with an ARM template</p>
+                <img src="imgs/armstorage.jpg">
+                <a href="/project-armtemplates-storageacc.html"><button>See Project</button></a>
+            </article>
+            <article class="project">
+                <h1>ARM Templates: Why?</h1>
+                <p>Explaining why you should use ARM templates for automated Azure deployment</p>
+                <img src="imgs/armtemplate.jpg">
+                <a href="/blog-armtemplates1.html"><button>See Project</button></a>
+            </article>
+            <article class="project">
+                <h1>AZCopy Automation</h1>
+                <p>Automating the backup of web containers using Windows Task Scheduler</p>
+                <img src="imgs/automatebatch.jpg">
+                <a href="/project-azcopyautomation.html"><button>See Project</button></a>
+            </article>
+            <article class="project">
+                <h1>AZCopy and the Batch File</h1>
+                <p>Creating an  batch file for AZCopy turns out to be a lot harder than expected</p>
+                <img src="imgs/batchfile.jpg">
+                <a href="/project-azcopybatch.html"><button>See Project</button></a>
+            </article>
+            <article class="project">
+                <h1>Azure to On-Premises Sync</h1>
+                <p>Creating an file sync script using AZCopy for future automation</p>
+                <img src="imgs/cloudsync.jpg">
+                <a href="/project-azcopysync.html"><button>See Project</button></a>
+            </article>
+            <article class="project">
+                <h1>Hosting a Website In Azure</h1>
+                <p>This article explains how I built this website and hosted it using Azure data storage</p>
+                <img src="imgs/Websiteimg.jpg">
+                <a href="/project-website.html"><button>See Project</button></a>
+            </article>
+        </div>
+    </div>
+</body>

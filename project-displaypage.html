@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+</head>
+<!-- Nav bar -->
+
+<body>
+    <header>
+        <a href="http://www.leightonv.co.nz/" class="logo"><img class="logo" src="imgs/LogoLeighotn.png"></a>
+        <a href="http://www.leightonv.co.nz/" class="mobile-logo"><img class="mobile-logo"
+                src="imgs/LogoLVRletters.png"></a>
+        <nav>
+            <ul class="nav-link">
+                <li><a href="/project-displaypage.html">About</li>
+                <li><a href="http://www.leightonv.co.nz/">Projects</li>
+            </ul>
+        </nav>
+
+        <a onclick="openContact()" class="cta" href="#"><button>Contact</button></a>
+        <a onclick="openNav()" class="main-menu" href="#"><button>Menu</button></a>
+
+        <div id="mobile-menu" class="overlay">
+            <a class="close" onclick="closeNav()">&times;</a>
+            <div class="overlay-content">
+                <a href="/project-displaypage.html">About</a>
+                <a href="http://www.leightonv.co.nz/">Projects</a>
+                <a onclick="openContact()" class="cta" href="#">Contact</a>
+            </div>
+            <script type="text/javascript" src="mobile.js"></script>
+        </div>
+
+        <div id="contact-menu" class="overlay">
+            <a class="close" onclick="closeContact()">&times;</a>
+            <div class="overlay-content">
+                <a href="https://www.linkedin.com/in/leightonvanrooijen/" target="_blank">LinkedIn</a>
+                <a href="https://github.com/leightonvanrooijen" target="_blank">GitHub</a>
+                <a href="mailto:leightonvanrooijen@gmail.com">Email</a>
+            </div>
+            <script type="text/javascript" src="contact.js"></script>
+        </div>
+
+
+    </header>
+    <!-- Body -->
+
+    <div class="container">
+        <article class="post">
+            <h1>Leighton van Rooijen</h1>
+            <h2>Cloud Focused IT Specialist</h2>
+            
+            <p>
+                Leighton is a self starter who’s passion for the Tech industry led him into changing careers in 2020.
+                Some would say 2020 was the worst time to change but for Leighton it was an opportunity to retool his
+                toolbox and start pursuing passion over income. Tech has been a hobby of his since he was young. Much to
+                his parents dismay he was often found taking apart electronic toys to get a peak at the inner workings
+                from the age he could hold a screwdriver. When the household got its first computer his passion really
+                took off. From that moment on he was either found roaming the farm or inside on the computer. The two
+                polar opposite interests of outdoors and computers proved a unique challenge for Leighton when it came
+                to picking a career path. After pursuing a career in the outdoors he decided his passion for the IT
+                industry was stronger thus deciding to restudy.
+            </p>
+            <div>
+                <img src="imgs/leighton-yellow.jpg">
+            </div>
+            
+            <p>
+                After building multiple projects in his spare time Leighton decided that putting these projects out into
+                the internet would be a mutually beneficial exercise. The internet would get more information in a fast
+                developing industry and he would get to practice communicating his ideas to an audience, something he
+                considers an area he could improve in. The website began as a way to understand HTML, CSS and
+                JavaScript. He wanted to understand web design and the way data interacts with websites. From there it
+                became a way to display projects on his journey to understanding specifics of IT systems.
+            </p>
+
+        </article>
+    </div>
+
+</body>
