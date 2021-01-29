@@ -10,4 +10,5 @@ This was the first website I ever built (go easy). It's a mess and every post ha
   * JavaScript
   * CSS
   * HTML
+  <br />
 Yes that's it she was as basic as basic can be
